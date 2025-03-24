@@ -35,8 +35,9 @@ app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/event", eventRouter);
 
-const server = app.listen(3009, () => {
-  console.log('Server is running on port 3000');
+const PORT = process.env.PORT || 3000; // Use Render's port or fallback to 3009 locally
+const server = app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
 
 server.on('upgrade', (request, socket, head) => {
