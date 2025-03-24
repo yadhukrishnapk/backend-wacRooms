@@ -1,6 +1,7 @@
 {
   "name": "wacrooms",
   "version": "1.0.0",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon api/index.js",
