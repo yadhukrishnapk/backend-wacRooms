@@ -18,7 +18,7 @@ app.use(express.json());
 
 const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(',')
-  : ["http://localhost:5173", "http://localhost:5174","https://frontend-wac-rooms.vercel.app"];
+  : ["http://localhost:5173","https://frontend-wac-rooms.vercel.app"];
 
 app.use(cors({
   origin: function (origin, callback) {
@@ -35,7 +35,7 @@ app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/event", eventRouter);
 
-const PORT = process.env.PORT || 3000; // Use Render's port or fallback to 3009 locally
+const PORT = process.env.PORT || 3000; 
 const server = app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
