@@ -35,7 +35,7 @@ app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/event", eventRouter);
 
-const server = app.listen(3000, () => {
+const server = app.listen(3009, () => {
   console.log('Server is running on port 3000');
 });
 
