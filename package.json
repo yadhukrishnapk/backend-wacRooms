@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "nodemon api/index.js",
     "start": "node api/index.js",
-    "build": "echo 'No build step needed for backend'"
+    "build": "npm install"
   },
   "keywords": [],
   "author": "",
