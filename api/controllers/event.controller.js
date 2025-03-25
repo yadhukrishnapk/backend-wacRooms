@@ -1,4 +1,5 @@
 // backend/controllers/event.controller.js
+import { get } from "mongoose";
 import Event from "../models/event.model.js";
 import { errorHandler } from "../utils/error.js";
 
@@ -173,8 +174,8 @@ export const checkActiveEvent = async (req, res, next) => {
     const { room } = req.query;
 
     const currentISTTime = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
-    
-    console.log("📅 Current IST Time:", getFormattedISTTime());
+    const istTime = getFormattedISTTime();
+    console.log("📅 Current IST Time:", istTime);
 
     const query = {
       isEnded: false,
@@ -192,7 +193,8 @@ export const checkActiveEvent = async (req, res, next) => {
       success: true,
       status: activeEvents.length > 0,
       currentTime: getFormattedISTTime(),  
-      activeEvents: activeEvents.length > 0 ? activeEvents : null
+      activeEvents: activeEvents.length > 0 ? activeEvents : null,
+      istTime
     });
 
   } catch (error) {
