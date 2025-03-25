@@ -155,3 +155,47 @@ export const getAllEvents = async (req, res, next) => {
     next(errorHandler(500, "Error fetching events"));
   }
 };
+
+
+const getFormattedISTTime = () => {
+  const currentTime = new Date();
+    const formattedISTTime = new Intl.DateTimeFormat('en-IN', {
+    timeZone: 'Asia/Kolkata',
+    dateStyle: 'full',
+    timeStyle: 'medium'
+  }).format(currentTime);
+
+  return formattedISTTime;
+};
+
+export const checkActiveEvent = async (req, res, next) => {
+  try {
+    const { room } = req.query;
+
+    const currentISTTime = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+    
+    console.log("📅 Current IST Time:", getFormattedISTTime());
+
+    const query = {
+      isEnded: false,
+      start: { $lte: currentISTTime },  
+      end: { $gte: currentISTTime }    
+    };
+
+    if (room) {
+      query.room = room;
+    }
+
+    const activeEvents = await Event.find(query);
+
+    res.status(200).json({
+      success: true,
+      status: activeEvents.length > 0,
+      currentTime: getFormattedISTTime(),  
+      activeEvents: activeEvents.length > 0 ? activeEvents : null
+    });
+
+  } catch (error) {
+    next(errorHandler(500, "Error checking active events"));
+  }
+};
