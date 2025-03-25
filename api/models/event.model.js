@@ -17,6 +17,10 @@ const eventSchema = new mongoose.Schema({
     type: String,
     default: "default"
   },
+  eventType: { 
+    type: String,
+    default: "internal",
+  },
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",

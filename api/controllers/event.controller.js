@@ -3,9 +3,10 @@ import Event from "../models/event.model.js";
 import { errorHandler } from "../utils/error.js";
 
 export const createEvent = async (req, res, next) => {
+    console.log("create event");
     
   try {
-    const { title, start, end, category, room, userId } = req.body;
+    const { title, start, end, category, eventType, room, userId } = req.body;
     if (!userId) {
         return next(errorHandler(400, "User ID is required"));
     }
@@ -15,10 +16,13 @@ export const createEvent = async (req, res, next) => {
       start,
       end,
       category,
+      eventType,
       userId,
       room,
       isEnded: false
     });
+    console.log("newEvent: ",newEvent);
+    
 
     await newEvent.save();
     res.status(201).json({ 
@@ -118,6 +122,7 @@ export const getAllEvents = async (req, res, next) => {
           start: 1,
           end: 1,
           category: 1,
+          eventType: 1,
           room: 1,
           isEnded: 1,
           createdAt: 1,
