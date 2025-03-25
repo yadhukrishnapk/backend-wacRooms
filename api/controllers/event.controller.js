@@ -3,12 +3,18 @@ import Event from "../models/event.model.js";
 import { errorHandler } from "../utils/error.js";
 
 export const createEvent = async (req, res, next) => {
-    console.log("create event");
+    console.log("create event: ",req.body);
     
   try {
-    const { title, start, end, category, eventType, room, userId } = req.body;
+    const { title, start, end, category, eventType, participants,room, userId } = req.body;
     if (!userId) {
         return next(errorHandler(400, "User ID is required"));
+    }
+    if(participants){
+      console.log("participants: ",participants);
+      
+    }else{
+      console.log("no participants");
     }
 
     const newEvent = new Event({
@@ -17,6 +23,7 @@ export const createEvent = async (req, res, next) => {
       end,
       category,
       eventType,
+      participants,
       userId,
       room,
       isEnded: false
