@@ -179,8 +179,8 @@ export const checkActiveEvent = async (req, res, next) => {
 
     const query = {
       isEnded: false,
-      start: { $lte: currentISTTime },  
-      end: { $gte: currentISTTime }    
+      start: { $lte: istTime },  
+      end: { $gte: istTime }    
     };
 
     if (room) {
