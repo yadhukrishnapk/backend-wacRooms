@@ -173,29 +173,28 @@ export const checkActiveEvent = async (req, res, next) => {
   try {
     const { room } = req.query;
 
-    const istTime = getFormattedISTTime(); // Use the existing time function
+    const currentISTTime = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+    const istTime = getFormattedISTTime();
     console.log("📅 Current IST Time:", istTime);
 
     const query = {
       isEnded: false,
-      start: { $lte: istTime },  
-      end: { $gte: istTime }    
+      start: { $lte: currentISTTime },  
+      end: { $gte: currentISTTime }    
     };
 
     if (room) {
       query.room = room;
     }
 
-    const activeEvents = await Event.find(query)
-      .select('title room start end _id') // Optimize by selecting only needed fields
-      .lean(); // Use lean() for performance if you don't need mongoose document methods
+    const activeEvents = await Event.find(query);
 
     res.status(200).json({
       success: true,
       status: activeEvents.length > 0,
-      currentTime: istTime,  
+      currentTime: getFormattedISTTime(),  
       activeEvents: activeEvents.length > 0 ? activeEvents : null,
-      count: activeEvents.length
+      istTime
     });
 
   } catch (error) {
